@@ -1,0 +1,103 @@
+data = \
+    {
+        "teams":
+            {
+                "GT":
+                    {
+                        "Pts": 20,
+                        "Last 5 match": [1, 1, 0, 0, 1]
+                    },
+
+                "LSG":
+                    {
+                        "Pts": 18,
+                        "Last 5 match": [1, 0, 0, 1, 1]
+                    },
+
+                "RR":
+                    {
+                        "Pts": 16,
+                        "Last 5 match": [1, 0, 1, 0, 0]
+                    },
+
+                "DC":
+                    {
+                        "Pts": 14,
+                        "Last 5 match": [1, 1, 0, 1, 0]
+                    },
+
+                "RCB":
+                    {
+                        "Pts": 14,
+                        "Last 5 match": [0, 1, 1, 0, 0]
+                    },
+
+                "KKR":
+                    {
+                        "Pts": 12,
+                        "Last 5 match": [0, 1, 1, 0, 1]
+                    },
+
+                "PBKS":
+                    {
+                        "Pts": 12,
+                        "Last 5 match": [0, 1, 0, 1, 0]
+                    },
+
+                "SRH":
+                    {
+                        "Pts": 12,
+                        "Last 5 match": [1, 0, 0, 0, 0]
+                    },
+
+                "CSK":
+                    {
+                        "Pts": 8,
+                        "Last 5 match": [0, 0, 1, 0, 1]
+                    },
+
+                "MI":
+                    {
+                        "Pts": 6,
+                        "Last 5 match": [0, 1, 0, 1, 1]
+                    }
+            }
+    }
+print(data)
+teams=data.get("teams")
+print(teams)
+Consecutive_2_loss = []
+Consecutive_loss = {}
+Consecutive_win = {}
+
+for team in teams:
+    win_count = 0
+    lost_count = 0
+    last_five_match = teams.get(team).get("Last 5 match")
+    for i in range(len(last_five_match)):
+        if (len(last_five_match) - 1 == i):
+            break
+        if (last_five_match[i] == 0):
+            if (last_five_match[i + 1] == 0):
+                lost_count += 1
+        else:
+            if (last_five_match[i + 1] == 1):
+                win_count += 1
+    Consecutive_win.update({team: win_count})
+    Consecutive_loss.update({team: lost_count})
+
+for i in Consecutive_loss:
+    if Consecutive_loss[i] == 1:
+        Consecutive_2_loss.append(i)
+
+print("Total count of Consecutive_win ",Consecutive_win)
+print("Total count of Consecutive_loss ",Consecutive_loss)
+print("Total count of Consecutive_2_loss ",Consecutive_2_loss)
+
+"""Taking Average"""
+Total = 0
+for team in Consecutive_2_loss:
+    Total += data.get("teams").get(team).get("Pts")
+
+Avg = Total / len(Consecutive_2_loss)
+print("Average",Avg)
